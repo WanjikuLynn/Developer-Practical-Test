@@ -1,0 +1,56 @@
+Master:
+// declare arrays for the slaves(queues are implemented using arrays)
+void setup(){
+  SPI.begin;   // Begin SPI protocol
+  digitalWrite(SS,HIGH);
+  SPI.begin();
+  SPI.setClockDivider(SPI_CLOCK_DIV8);
+}
+void loop(){
+  // create as many functions as there are keypads in the building.
+  // inside each function
+  keypad1(){
+    // take keypad input.
+    // check all the filters and assign a lift
+    SPI.transfer(destination);  // goes to selected slave
+    enqueue(destination); // added to selected slave queue
+  }
+
+ keypad2(){
+//take keypad input.
+//check all the filters and assign a lift
+SPI.transfer(destination); //goes to selected slave
+enqueue(destination); //added to the selected slave
+
+  Keypad3(){
+    // take keypad input.
+    // check all the filters and assign a lift
+    SPI.transfer(destination);  // goes to selected slave
+    enqueue(destination); // added to selected slave queue
+  }
+  Keypad4(){
+      // take keypad input.
+      // check all the filters and assign a lift
+      SPI.transfer(destination);  // goes to selected slave
+      enqueue(destination); // added to selected slave queue
+    }
+}
+
+Slave code:
+
+// declare array for the slave (queue is implemented using array)
+void setup(){
+  pinMode(MISO,OUTPUT);
+  SPCR |= _BV(SPE);  // turn on slave mode
+  SPCR |= _BV(SPIE);  // turn on interrupt
+}
+ISR(SPI_STC_vect){
+  // receive destination from master
+  // add to the queue
+}
+void loop(){
+  // always looks at the first element of the queue and goes to that floor.
+  // when the destination is reached, it is deleted from queue
+  // inform master about deletion so that it can update the queue for this slave
+}
+?
